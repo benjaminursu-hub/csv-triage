@@ -2,12 +2,13 @@
 
 ## Delivered first slice
 
-Python rule engine; local CLI; loopback JSON API; browser upload/paste; synthetic demo; filtering/export; reproducible schema/content hashes; optional SQLite persistence; meaningful core and HTTP regression tests.
+Python rule engine; local CLI; loopback JSON API; browser upload/paste; synthetic demo; filtering/export; reproducible schema/content hashes; optional SQLite persistence; meaningful core and HTTP regression tests; Windows/Linux CI for Python 3.11 and 3.12.
 
 ## Week 1: validate the problem
 
 - Interview three potential users (students, civic-data volunteers or data publishers); show the prototype and record actual pain points rather than leading questions.
 - Choose one real dataset with a verified reuse licence and documented fields. Record provenance and limitations; do not assume every publicly downloadable dataset is open-licensed.
+- Prioritise a bounded Open Repair Data sample: map ORDS v0.3 fields, partner-scoped identifiers and code lists. The full aggregate exceeds the initial engine limits; add streaming before attempting it.
 - Add composite unique keys and explicit timestamp parsing if the selected dataset needs them.
 - Define a useful acceptance scenario with the users. Measure actual results before publishing speed or accuracy claims.
 
@@ -29,7 +30,7 @@ Python rule engine; local CLI; loopback JSON API; browser upload/paste; syntheti
 
 - Publish a reproducible demo recording with source provenance, before/after results and explicit limitations.
 - Compare the workflow against Frictionless; document why someone would choose either tool.
-- Add CI on Linux and Windows and supported Python versions.
+- Extend the existing CI matrix and add automated browser-flow checks.
 - Package a versioned release; include engineering decisions and unresolved issues.
 
 Success is a small workflow someone can demonstrate and explain, not a large list of unfinished features.
