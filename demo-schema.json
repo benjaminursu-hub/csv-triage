@@ -1,0 +1,9 @@
+{
+  "columns": {
+    "station_id": {"required": true, "unique": true},
+    "date": {"required": true, "type": "date"},
+    "pm25": {"type": "number", "min": 0, "sentinels": ["-9999"]},
+    "latitude": {"type": "number", "min": -90, "max": 90},
+    "longitude": {"type": "number", "min": -180, "max": 180}
+  }
+}
