@@ -1,0 +1,7 @@
+id,data_provider,country,partner_product_category,product_category,product_category_id,brand,year_of_manufacture,product_age,repair_status,repair_barrier_if_end_of_life,group_identifier,event_date,problem,record_date
+201,The Restart Project,GBR,Laptop,Laptop,16,SynthBrand-A,2018,7,Fixed,,grp-01,2025-03-01,SYNTHETIC-PROBLEM-21 hinge,2025-03-02
+201,Repair Café International,NLD,Laptop,Laptop,16,,,,2,,grp-02,2025-03-08,SYNTHETIC-PROBLEM-22 boot,2025-03-08
+202,The Restart Project,GBR,Kettle,Kettle,14,,,,End of life,Item too worn out,grp-01,2025-03-15,SYNTHETIC-PROBLEM-23 rust,
+203,Repair Café International,BEL,Lamp,,,,,,3,6,,2024-02-29,SYNTHETIC-PROBLEM-24 socket,2024-02-29
+204,The Restart Project,GBR,Toy,Toy,32,,2024,0.5,0,,grp-03,2024-12-31,SYNTHETIC-PROBLEM-25 motor,
+205,Repair Café International,NLD,Clock,Watch/clock,35,,,,End of life,,grp-02,2025-01-01,SYNTHETIC-PROBLEM-26 movement,

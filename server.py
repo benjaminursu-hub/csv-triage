@@ -6,12 +6,18 @@ import json
 from pathlib import Path
 import sqlite3
 import time
-from urllib.parse import urlsplit
+from urllib.parse import parse_qs, urlsplit
 
 from audit import AuditError, MAX_BYTES, audit_csv
 
 ROOT = Path(__file__).parent
 MAX_REQUEST = MAX_BYTES + 250_000
+# Fixed allowlist: query values select a preset, never a filesystem path.
+DEMOS = {
+    "sensor": ("demo.csv", "demo-schema.json", "Synthetic sensor data with eight seeded defects."),
+    "repair": ("fixtures/repair-seeded.csv", "profiles/ords-v0.3.json", "Synthetic ORDS v0.3 repair records with twelve seeded findings."),
+    "repair-corrected": ("fixtures/repair-corrected.csv", "profiles/ords-v0.3.json", "The same synthetic repair records after corrections."),
+}
 
 
 def store_report(database, report):
@@ -49,7 +55,15 @@ def make_handler(database=None):
             if path == "/api/health":
                 return self.send(200, {"status": "ok", "version": 1})
             if path == "/api/demo":
-                return self.send(200, {"csv": (ROOT / "demo.csv").read_text(encoding="utf-8"), "schema": json.loads((ROOT / "demo-schema.json").read_text(encoding="utf-8"))})
+                name = parse_qs(urlsplit(self.path).query).get("preset", ["sensor"])[0]
+                if name not in DEMOS:
+                    return self.send(404, {"error": "Unknown demo preset."})
+                csv_file, schema_file, description = DEMOS[name]
+                return self.send(200, {"preset": name, "description": description,
+                                       "csv": (ROOT / csv_file).read_text(encoding="utf-8"),
+                                       "schema": json.loads((ROOT / schema_file).read_text(encoding="utf-8"))})
+            if path == "/api/profiles/ords-v0.3":
+                return self.send(200, json.loads((ROOT / "profiles/ords-v0.3.json").read_text(encoding="utf-8")))
             return self.send(404, {"error": "Not found."})
 
         def do_POST(self):
