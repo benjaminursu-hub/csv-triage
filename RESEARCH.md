@@ -29,17 +29,29 @@ Perplexity ranked electricity peaks first, repair-data quality second and access
 
 **Our first-project recommendation is the repair-data quality direction.** It fits Python/SQL skills, has inspectable public specifications and can grow from a small tested engine into a domain-specific workflow. CSV Triage is the first reusable validation slice. It is not yet a complete ORDS validator or an explorer of the entire repair dataset.
 
-Next milestone: map the actual ORDS version and partner fields, add provider-scoped IDs and code-list checks, then test on a small, licensed sample. The current 5 MB / 100,000-record limit cannot process the full aggregate; streaming and large-dataset support must precede that claim. Keep any derived data under the applicable data licence, separately from this repository's MIT code licence.
+Milestone delivered: ORDS v0.3 fields mapped, provider-scoped IDs, code lists and completeness added, and checked on a bounded sample of release 202507 (see below). The current 5 MB / 100,000-record limit cannot process the full aggregate; streaming and large-dataset support must precede that claim. Keep any derived data under the applicable data licence, separately from this repository's MIT code licence.
 
 Accessibility evidence is a strong second project, especially for CI and web engineering. W3C says evaluation requires both tools and human judgement; the output must not be described as legal compliance certification.
 
 Electricity peaks remain a promising larger project. Verify current billing rules, consented export formats and daylight-saving handling before estimating costs. An educational peak visualisation is a safer initial scope than a savings recommendation.
 
+## Repair-data milestone decisions (15 October 2026)
+
+- **Target partner-level ORDS v0.3 records**, not the aggregate layout. The standard defines partner submissions; the aggregate adds prefixed IDs and drops `record_date`.
+- **Composite key `data_provider` + `id`.** The standard says IDs are unique per partner. Measured on the pinned release: 90,563 numeric local IDs occur under more than one provider, and a naive unique-ID rule produced 2,781 false duplicates in a 15,033-record sample.
+- **Errors versus warnings.** Only stated requirements are errors. Open lists (data provider), estimated years and conditional values are warnings, so a new partner or a plausible estimate does not fail CI with `--fail-on error`.
+- **Completeness instead of blank-field errors** for optional fields. Grouping uses code-list labels so reports still contain no raw cell values.
+- **Follow the code-list table where the standard contradicts itself** (barrier wording), and document each discrepancy rather than accepting several spellings silently.
+- **Synthetic fixtures only.** Real data stays out of the repository because of CC BY-SA share-alike obligations and because partner records were not reviewed for personal data.
+
+Full mapping, pinned commits and gaps: [ORDS.md](ORDS.md).
+
 ## Sources checked independently
 
 - [Open Repair Alliance downloads](https://openrepair.org/open-data/downloads/): the download page lists a 305,649-record October 2025 snapshot, ORDS v0.3 and CC BY-SA 4.0. The same site links to newer reporting mentioning over 400,000 items. **Pin a dataset release; do not call the older number the current total.**
 - [Open Repair Data Standard](https://standard.openrepair.org/standard.html): inspectable field definitions and required/optional modules. IDs are partner-scoped; treating an ID as globally unique would be incorrect.
-- [Open Repair data repository](https://github.com/openrepair/data): published source repository for repair datasets.
+- [Open Repair data repository](https://github.com/openrepair/data): pinned at `3d968a7`, release `aggregated/202507`; README states 305,649 powered items, data to end of July 2025, ORDS v0.3, CC BY-SA 4.0.
+- [ORDS source](https://github.com/openrepair/datastandard): pinned at `c1a1f29` for field definitions and code lists.
 - [Frictionless validation guide](https://framework.frictionlessdata.io/docs/guides/validating-data.html): existing CSV validation already covers structural and type issues. A generic scanner alone is not a novel market gap.
 - [W3C evaluation tools overview](https://www.w3.org/WAI/test-evaluate/tools/): automation is part of evaluation, not a substitute for human review.
 - [Fluvius dataset page](https://opendata.fluvius.be/explore/dataset/1_50-verbruiksprofielen-dm-elek-kwartierwaarden-voor-een-volledig-jaar/): an official dataset landing page was located. The report's raw-data analysis and licensing interpretation still need independent reproduction before reuse.

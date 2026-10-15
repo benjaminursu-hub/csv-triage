@@ -1,0 +1,251 @@
+{
+  "profile": {
+    "name": "Open Repair Data Standard partner records",
+    "version": "ORDS v0.3",
+    "source": "standard.openrepair.org/standard.html; datastandard@c1a1f29; data@3d968a7 aggregated/202507"
+  },
+  "columns": {
+    "id": {
+      "required": true,
+      "description": "Partner record ID. Unique within one data_provider only, so it is checked with the composite key, not alone."
+    },
+    "data_provider": {
+      "required": true,
+      "allowed": [
+        "anstiftung",
+        "Fixit Clinic",
+        "Repair Café Denmark",
+        "Repair Café International",
+        "Repair Café Toronto",
+        "Repair Cafe Wales",
+        "Repair Connects",
+        "The Restart Project"
+      ],
+      "unlisted": "warning",
+      "description": "Code list not printed in the standard; values observed in release 202507. A new partner is a warning, not an error."
+    },
+    "country": {
+      "required": true,
+      "pattern": "^[A-Z]{3}$",
+      "description": "ISO 3166-1 alpha-3 shape only; membership in the ISO list is not checked."
+    },
+    "partner_product_category": {
+      "required": true,
+      "description": "Partner code list or free text; not checked against a list."
+    },
+    "product_category": {
+      "allowed": [
+        "Aircon/dehumidifier",
+        "Battery/charger/adapter",
+        "Decorative or safety lights",
+        "Desktop computer",
+        "Digital compact camera",
+        "DSLR/video camera",
+        "Fan",
+        "Flat screen",
+        "Hair & beauty item",
+        "Handheld entertainment device",
+        "Headphones",
+        "Hi-Fi integrated",
+        "Hi-Fi separates",
+        "Kettle",
+        "Lamp",
+        "Laptop",
+        "Large home electrical",
+        "Misc",
+        "Mobile",
+        "Musical instrument",
+        "Paper shredder",
+        "PC accessory",
+        "Portable radio",
+        "Power tool",
+        "Printer/scanner",
+        "Projector",
+        "Sewing machine",
+        "Small home electrical",
+        "Small kitchen item",
+        "Tablet",
+        "Toaster",
+        "Toy",
+        "TV and gaming-related accessories",
+        "Vacuum",
+        "Watch/clock",
+        "Coffee maker",
+        "Food processor",
+        "Games console",
+        "Hair dryer",
+        "Iron"
+      ],
+      "description": "ORDS product category code list (40 values)."
+    },
+    "product_category_id": {
+      "allowed": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8",
+        "9",
+        "10",
+        "11",
+        "12",
+        "13",
+        "14",
+        "15",
+        "16",
+        "17",
+        "18",
+        "19",
+        "20",
+        "21",
+        "22",
+        "23",
+        "24",
+        "25",
+        "26",
+        "27",
+        "28",
+        "29",
+        "30",
+        "31",
+        "32",
+        "33",
+        "34",
+        "35",
+        "36",
+        "37",
+        "38",
+        "39",
+        "40"
+      ],
+      "pairs_with": {
+        "column": "product_category",
+        "map": {
+          "1": "Aircon/dehumidifier",
+          "2": "Battery/charger/adapter",
+          "3": "Decorative or safety lights",
+          "4": "Desktop computer",
+          "5": "Digital compact camera",
+          "6": "DSLR/video camera",
+          "7": "Fan",
+          "8": "Flat screen",
+          "9": "Hair & beauty item",
+          "10": "Handheld entertainment device",
+          "11": "Headphones",
+          "12": "Hi-Fi integrated",
+          "13": "Hi-Fi separates",
+          "14": "Kettle",
+          "15": "Lamp",
+          "16": "Laptop",
+          "17": "Large home electrical",
+          "18": "Misc",
+          "19": "Mobile",
+          "20": "Musical instrument",
+          "21": "Paper shredder",
+          "22": "PC accessory",
+          "23": "Portable radio",
+          "24": "Power tool",
+          "25": "Printer/scanner",
+          "26": "Projector",
+          "27": "Sewing machine",
+          "28": "Small home electrical",
+          "29": "Small kitchen item",
+          "30": "Tablet",
+          "31": "Toaster",
+          "32": "Toy",
+          "33": "TV and gaming-related accessories",
+          "34": "Vacuum",
+          "35": "Watch/clock",
+          "36": "Coffee maker",
+          "37": "Food processor",
+          "38": "Games console",
+          "39": "Hair dryer",
+          "40": "Iron"
+        }
+      },
+      "description": "Must correspond to product_category."
+    },
+    "brand": {
+      "description": "Optional free text."
+    },
+    "year_of_manufacture": {
+      "type": "year",
+      "not_after": "event_date",
+      "description": "YYYY. A year after the event year is a warning."
+    },
+    "product_age": {
+      "type": "number",
+      "min": 0,
+      "pattern": "^[0-9]+(\\.[0-9])?$",
+      "description": "Years, 0 or 1 decimal place."
+    },
+    "repair_status": {
+      "required": true,
+      "allowed": [
+        "0",
+        "1",
+        "2",
+        "3",
+        "Unknown",
+        "Fixed",
+        "Repairable",
+        "End of life"
+      ],
+      "description": "Code or text from the repair status code list."
+    },
+    "repair_barrier_if_end_of_life": {
+      "allowed": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "Spare parts not available",
+        "Spare parts too expensive",
+        "No way to open product",
+        "Repair information not available",
+        "Lack of equipment",
+        "Item too worn out"
+      ],
+      "only_if": {
+        "column": "repair_status",
+        "in": [
+          "3",
+          "End of life"
+        ]
+      },
+      "description": "Optional; only expected when repair_status is End of life."
+    },
+    "group_identifier": {
+      "description": "Optional group code; identifies a group, so it repeats across records."
+    },
+    "problem": {
+      "required": true,
+      "description": "Required free text. Never copied into reports."
+    },
+    "event_date": {
+      "required": true,
+      "type": "date",
+      "description": "YYYY-MM-DD calendar date."
+    },
+    "record_date": {
+      "type": "date",
+      "not_before": "event_date",
+      "description": "Optional YYYY-MM-DD last-updated date. Earlier than event_date is a warning."
+    }
+  },
+  "unique_together": [
+    {
+      "columns": [
+        "data_provider",
+        "id"
+      ],
+      "missing": "skip"
+    }
+  ],
+  "group_by": "data_provider"
+}

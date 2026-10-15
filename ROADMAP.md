@@ -4,12 +4,22 @@
 
 Python rule engine; local CLI; loopback JSON API; browser upload/paste; synthetic demo; filtering/export; reproducible schema/content hashes; optional SQLite persistence; meaningful core and HTTP regression tests; Windows/Linux CI for Python 3.11 and 3.12.
 
+## Delivered: repair-data profile (ORDS v0.3)
+
+Composite keys with a missing-component policy; code lists; format, year and cross-field rules; error/warning severity with `--fail-on error`; completeness per field and per provider; a pinned ORDS v0.3 profile; seeded, corrected and valid synthetic fixtures; dashboard presets; 26 new tests; a bounded real-data check. Details in [ORDS.md](ORDS.md).
+
+## Next: make the repair profile trustworthy on real files
+
+- Ask one or two repair-data practitioners to review [ORDS.md](ORDS.md) and a report from their own export. Record which findings were useful or wrong. Do not contact organisations without the maintainer's approval.
+- Add streaming so the full 202507 release (58 MB) can be audited. Measure memory and time before claiming either.
+- Decide whether an aggregate-layout profile is useful (prefixed IDs, no `record_date`).
+- Add ISO 3166-1 alpha-3 membership from a pinned, licensed list.
+
 ## Week 1: validate the problem
 
 - Interview three potential users (students, civic-data volunteers or data publishers); show the prototype and record actual pain points rather than leading questions.
 - Choose one real dataset with a verified reuse licence and documented fields. Record provenance and limitations; do not assume every publicly downloadable dataset is open-licensed.
-- Prioritise a bounded Open Repair Data sample: map ORDS v0.3 fields, partner-scoped identifiers and code lists. The full aggregate exceeds the initial engine limits; add streaming before attempting it.
-- Add composite unique keys and explicit timestamp parsing if the selected dataset needs them.
+- ~~Map ORDS v0.3 fields, partner-scoped identifiers and code lists on a bounded sample.~~ Done; streaming is still needed for the full aggregate.
 - Define a useful acceptance scenario with the users. Measure actual results before publishing speed or accuracy claims.
 
 ## Week 2: useful comparisons
@@ -21,7 +31,7 @@ Python rule engine; local CLI; loopback JSON API; browser upload/paste; syntheti
 
 ## Week 3: better review workflow
 
-- Add a schema editor, severity configuration and plain-language rule help.
+- Add a schema editor, per-rule severity overrides and plain-language rule help.
 - Add downloadable accessible HTML reports and keyboard/screen-reader testing.
 - Ask users whether findings are actionable; track false positives and confusing messages.
 - Profile memory and execution time on bounded real fixtures.

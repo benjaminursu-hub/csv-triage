@@ -1,0 +1,16 @@
+id,data_provider,country,partner_product_category,product_category,product_category_id,brand,year_of_manufacture,product_age,repair_status,repair_barrier_if_end_of_life,group_identifier,event_date,problem,record_date
+101,The Restart Project,GBR,Laptop,Laptop,16,SynthBrand-A,2018,7,Fixed,,grp-01,2025-03-01,SYNTHETIC-PROBLEM-01 hinge loose,2025-03-02
+101,Repair Café International,NLD,Laptop computer,Laptop,16,SynthBrand-B,2019,6,Repairable,,grp-02,2025-03-08,SYNTHETIC-PROBLEM-02 will not boot,2025-03-09
+103,The Restart Project,GBR,Kettle,Kettle,14,SynthBrand-C,,,Fixed,,grp-01,2025-03-15,SYNTHETIC-PROBLEM-03 switch faulty,2025-03-16
+104,The Restart Project,BEL,Toaster,Toaster,31,SynthBrand-D,,,Fixed,,grp-03,2025-04-05,SYNTHETIC-PROBLEM-04 element broken,2025-04-06
+105,Repair Café International,NLD,Lamp,Lamp,15,,,,Unknown,,grp-02,2025-04-12,SYNTHETIC-PROBLEM-05 flickers,
+106,The Restart Project,GBR,Laptop,Laptop,16,SynthBrand-E,2020,5,Fixed,,grp-01,2025-04-19,SYNTHETIC-PROBLEM-06 battery swollen,2025-04-20
+107,Repair Café International,BEL,Fan,Fan,7,,,,Fixed,,grp-04,2025-02-28,SYNTHETIC-PROBLEM-07 noisy bearing,2025-03-01
+108,The Restart Project,GBR,Radio,Portable radio,23,,,,Fixed,,grp-01,2025-05-03,SYNTHETIC-PROBLEM-08 no sound,
+109,Repair Café International,NLD,Vacuum,Vacuum,34,SynthBrand-F,,,Fixed,,grp-02,2025-05-10,SYNTHETIC-PROBLEM-09 belt replaced,2025-05-11
+110,The Restart Project,GBR,Mobile phone,Mobile,19,SynthBrand-G,2026,,Repairable,,grp-03,2025-05-17,SYNTHETIC-PROBLEM-10 screen cracked,2025-05-18
+111,Example Repair Group,BEL,Printer,Printer/scanner,25,,,,Fixed,,grp-05,2025-05-24,SYNTHETIC-PROBLEM-11 paper jam,2025-05-25
+112,Repair Café International,NLD,Hair dryer,Hair dryer,39,,,2.3,Fixed,,grp-02,2025-05-31,SYNTHETIC-PROBLEM-12 overheats,2025-06-01
+113,The Restart Project,GBR,Clock,,,,,,End of life,,,2025-06-07,SYNTHETIC-PROBLEM-13 movement seized,
+114,Repair Café International,NLD,Iron,Iron,40,SynthBrand-H,,,Fixed,,grp-02,2025-06-14,SYNTHETIC-PROBLEM-14 no steam,2025-06-15
+115,The Restart Project,GBR,Headphones,Headphones,11,,,,Fixed,,grp-01,2025-06-21,SYNTHETIC-PROBLEM-15 cable fault,

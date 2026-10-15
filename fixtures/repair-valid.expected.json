@@ -1,0 +1,198 @@
+{
+  "report_version": 1,
+  "source_sha256": "4d97736e1dd05755cac3b2fb8597cda222f9c8773da08a8ead00dab1c94f52bf",
+  "schema_sha256": "97602d983b68aea9810a32d831d2fc077a2b6c50f1285f54fcc5fe812c523349",
+  "columns": [
+    "id",
+    "data_provider",
+    "country",
+    "partner_product_category",
+    "product_category",
+    "product_category_id",
+    "brand",
+    "year_of_manufacture",
+    "product_age",
+    "repair_status",
+    "repair_barrier_if_end_of_life",
+    "group_identifier",
+    "event_date",
+    "problem",
+    "record_date"
+  ],
+  "row_count": 6,
+  "complete": true,
+  "valid": true,
+  "error_free": true,
+  "issue_count": 0,
+  "error_count": 0,
+  "warning_count": 0,
+  "affected_rows": 0,
+  "counts_by_rule": {},
+  "counts_by_severity": {
+    "error": 0,
+    "warning": 0
+  },
+  "issues": [],
+  "examples_truncated": false,
+  "note": "Passing these configured checks does not establish accuracy or fitness for use.",
+  "profile": {
+    "name": "Open Repair Data Standard partner records",
+    "version": "ORDS v0.3",
+    "source": "standard.openrepair.org/standard.html; datastandard@c1a1f29; data@3d968a7 aggregated/202507"
+  },
+  "completeness": {
+    "records_considered": 6,
+    "note": "Counts well-formed records. Blank optional values are not findings.",
+    "columns": {
+      "id": {
+        "filled": 6,
+        "blank": 0,
+        "placeholder": 0,
+        "required": true
+      },
+      "data_provider": {
+        "filled": 6,
+        "blank": 0,
+        "placeholder": 0,
+        "required": true
+      },
+      "country": {
+        "filled": 6,
+        "blank": 0,
+        "placeholder": 0,
+        "required": true
+      },
+      "partner_product_category": {
+        "filled": 6,
+        "blank": 0,
+        "placeholder": 0,
+        "required": true
+      },
+      "product_category": {
+        "filled": 5,
+        "blank": 1,
+        "placeholder": 0,
+        "required": false
+      },
+      "product_category_id": {
+        "filled": 5,
+        "blank": 1,
+        "placeholder": 0,
+        "required": false
+      },
+      "brand": {
+        "filled": 1,
+        "blank": 5,
+        "placeholder": 0,
+        "required": false
+      },
+      "year_of_manufacture": {
+        "filled": 2,
+        "blank": 4,
+        "placeholder": 0,
+        "required": false
+      },
+      "product_age": {
+        "filled": 2,
+        "blank": 4,
+        "placeholder": 0,
+        "required": false
+      },
+      "repair_status": {
+        "filled": 6,
+        "blank": 0,
+        "placeholder": 0,
+        "required": true
+      },
+      "repair_barrier_if_end_of_life": {
+        "filled": 2,
+        "blank": 4,
+        "placeholder": 0,
+        "required": false
+      },
+      "group_identifier": {
+        "filled": 5,
+        "blank": 1,
+        "placeholder": 0,
+        "required": false
+      },
+      "event_date": {
+        "filled": 6,
+        "blank": 0,
+        "placeholder": 0,
+        "required": true
+      },
+      "problem": {
+        "filled": 6,
+        "blank": 0,
+        "placeholder": 0,
+        "required": true
+      },
+      "record_date": {
+        "filled": 3,
+        "blank": 3,
+        "placeholder": 0,
+        "required": false
+      }
+    }
+  },
+  "keys": [
+    {
+      "columns": [
+        "data_provider",
+        "id"
+      ],
+      "missing": "skip",
+      "checked": true,
+      "records_keyed": 6,
+      "records_incomplete": 0,
+      "duplicates": 0
+    }
+  ],
+  "completeness_by_group": {
+    "column": "data_provider",
+    "note": "Group labels come from the configured code list, never from unlisted cell values.",
+    "groups": {
+      "Repair Café International": {
+        "records": 3,
+        "filled": {
+          "id": 3,
+          "data_provider": 3,
+          "country": 3,
+          "partner_product_category": 3,
+          "product_category": 2,
+          "product_category_id": 2,
+          "brand": 0,
+          "year_of_manufacture": 0,
+          "product_age": 0,
+          "repair_status": 3,
+          "repair_barrier_if_end_of_life": 1,
+          "group_identifier": 2,
+          "event_date": 3,
+          "problem": 3,
+          "record_date": 2
+        }
+      },
+      "The Restart Project": {
+        "records": 3,
+        "filled": {
+          "id": 3,
+          "data_provider": 3,
+          "country": 3,
+          "partner_product_category": 3,
+          "product_category": 3,
+          "product_category_id": 3,
+          "brand": 1,
+          "year_of_manufacture": 2,
+          "product_age": 2,
+          "repair_status": 3,
+          "repair_barrier_if_end_of_life": 1,
+          "group_identifier": 3,
+          "event_date": 3,
+          "problem": 3,
+          "record_date": 1
+        }
+      }
+    }
+  }
+}

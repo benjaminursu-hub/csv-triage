@@ -1,6 +1,40 @@
 # Validation record
 
-Checked locally on 15 October 2026, Windows, Python 3.12.14.
+## Repair-data milestone: 15 October 2026
+
+Checked in a Linux cloud container (Python 3.13.16, Chromium via Playwright), not on Windows. GitHub CI runs the same suite on Windows and Ubuntu with Python 3.11 and 3.12. See the pull request for those results.
+
+#### Automated checks
+
+- Baseline before changes: 30 tests passed at `2c872c1`.
+- After changes: **56 tests pass** (`python -m unittest -v`): the original 30 unchanged plus 26 in `test_repair.py`.
+- The new tests cover the exact seeded findings per record, the corrected fixture (−10 findings, −8 errors, −2 warnings under the same profile), the valid fixture against its complete expected report, the same ID under two providers (accepted), repeated provider/ID (flagged with the first record), both missing-component policies, blank optional fields, missing optional and required columns, code lists (codes, text, case, the *Too worn out* spelling, an unlisted provider as a warning), category pairing, conditional barrier, date edge cases (leap day, 29 February 2025, unpadded, timestamp, compact and day-first dates), year/record-date order, age precision, invalid new rule configurations, the unchanged legacy schema hash, comparison with reports that predate severities, `--fail-on error`, real HTTP requests for the repair presets, a preset allowlist that rejects path-like names, and SQLite/JSON reports without free text or unlisted values.
+- **Mutation check:** making the composite key ignore `data_provider` caused 7 repair tests to fail. Restored afterwards.
+
+### Browser checks (Playwright, real local server on port 8766)
+
+- **Repair records (seeded) → Load example → Run audit**: 15 records, 12 findings, 8 errors, 4 warnings, 12 affected records. Focus moved to the results heading.
+- Severity filter *Warnings only* showed 4 rows; rule filter `duplicate_key` showed one row: record 4, "Same data_provider+id combination as record 2."
+- Key summary: 14 records keyed, 1 repeated, 1 with a blank component.
+- Completeness listed 15 columns. Completeness by provider for `problem`: The Restart Project 7 of 8 (88%), Repair Café International 6 of 6, `(unlisted value)` 1 of 1.
+- **Export JSON** downloaded a version 1 report with `{"error": 8, "warning": 4}` and no `SYNTHETIC` problem marker.
+- **Repair records (corrected)** run next: 2 findings, 0 errors, 2 warnings. The comparison line read "−10 findings (−8 errors, −2 warnings)".
+- The generic sensor demo still produced 8 findings (6 errors, 2 warnings) and hid the provider section.
+- Keyboard: Tab order from the page start was brand link → example select → Load example → Use ORDS v0.3 rules → file → CSV.
+- No console errors. The content security policy blocked Playwright's string-eval waits, as intended, so the script used selector-based waits.
+- **Layout:** at 390 px wide, the new example select initially caused horizontal page scrolling (442 px). The baseline did not. This was fixed and rechecked: no horizontal overflow. Desktop layout was inspected from a full-page screenshot.
+
+### Real-data check
+
+A bounded sample from Open Repair release 202507 (15,033 records, not committed) was audited with the profile. Results and caveats are in [ORDS.md](ORDS.md#real-data-check-bounded-not-committed).
+
+### Not verified in this milestone
+
+Windows execution locally (left to CI), screen-reader output, Firefox/Safari, the full 305,649-record release, partner-level files from any real provider, and whether repair-data practitioners find the findings useful. No performance claim is made.
+
+## Initial prototype: 15 October 2026
+
+Checked locally on Windows, Python 3.12.14.
 
 ## Automated checks
 
@@ -8,7 +42,7 @@ Checked locally on 15 October 2026, Windows, Python 3.12.14.
 
 The initial verification found an open SQLite connection on Windows; it was fixed using explicit connection closure and the suite was rerun. Sandboxed loopback connection restrictions required running the HTTP integration checks outside the sandbox. They were not skipped or replaced with mocks.
 
-## Browser checks
+### Browser checks
 
 - Local dashboard loaded from `http://127.0.0.1:8765`.
 - **Load demo -> Run audit** produced 7 records, 8 findings and 6 affected records.
@@ -16,7 +50,7 @@ The initial verification found an open SQLite connection on Windows; it was fixe
 - **Export JSON** downloaded a version 1 report.
 - Result rendering and layout were visually inspected.
 
-## Not yet verified
+### Not yet verified
 
 Real-user usefulness, production hosting, full assistive-technology compatibility, very large files, non-UTF-8 CSVs, Excel support and dataset-specific validation accuracy. No performance benchmark is claimed.
 
