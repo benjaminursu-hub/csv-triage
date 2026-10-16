@@ -3,6 +3,7 @@ import argparse
 from contextlib import closing
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 import json
+import socket
 from pathlib import Path
 import sqlite3
 import time
@@ -12,6 +13,9 @@ from audit import AuditError, MAX_BYTES, audit_csv
 
 ROOT = Path(__file__).parent
 MAX_REQUEST = MAX_BYTES + 250_000
+# Lingering close: after replying, read what the client still sends for a bounded time.
+LINGER_SECONDS = 1.0
+LINGER_BYTES = 64 * 1024
 # Fixed allowlist: query values select a preset, never a filesystem path.
 DEMOS = {
     "sensor": ("demo.csv", "demo-schema.json", "Synthetic sensor data with eight seeded defects."),
@@ -43,6 +47,24 @@ def make_handler(database=None):
         def allowed_host(self):
             # Resist browser DNS rebinding; only local literal hosts are accepted.
             return self.headers.get("Host") in {f"127.0.0.1:{self.server.server_port}", f"localhost:{self.server.server_port}"}
+
+        def finish(self):
+            # Early error replies (403, 404, 413, 415) leave request bytes unread. On Windows,
+            # closing a socket with unread incoming bytes sends a reset that can reach the client
+            # before the reply. So stop writing, then discard incoming bytes until the client
+            # closes, within fixed time and size limits so a slow client cannot hold the thread.
+            super().finish()
+            try:
+                self.connection.shutdown(socket.SHUT_WR)
+                self.connection.settimeout(LINGER_SECONDS)
+                received = 0
+                while received < LINGER_BYTES:
+                    chunk = self.connection.recv(4096)
+                    if not chunk:
+                        break
+                    received += len(chunk)
+            except OSError:
+                pass  # Timeout or connection already closed: nothing left to protect.
 
         def do_GET(self):
             if not self.allowed_host():
