@@ -8,6 +8,10 @@ Python rule engine; local CLI; loopback JSON API; browser upload/paste; syntheti
 
 Composite keys with a missing-component policy; code lists; format, year and cross-field rules; error/warning severity with `--fail-on error`; completeness per field and per provider; a pinned ORDS v0.3 profile; seeded, corrected and valid synthetic fixtures; dashboard presets; 26 new tests; a bounded real-data check. Details in [ORDS.md](ORDS.md).
 
+## Delivered: real-data case study
+
+A reproducible audit of Open Repair release 202507 with per-provider findings ([CASE_STUDY.md](CASE_STUDY.md)) and two helper scripts in `tools/`.
+
 ## Next: make the repair profile trustworthy on real files
 
 - Ask one or two repair-data practitioners to review [ORDS.md](ORDS.md) and a report from their own export. Record which findings were useful or wrong. Do not contact organisations without the maintainer's approval.

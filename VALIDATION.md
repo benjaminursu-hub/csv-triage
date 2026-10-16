@@ -1,5 +1,18 @@
 # Validation record
 
+## Real-data case study: 16 October 2026
+
+Checked in a Linux container, Python 3.13. Results are in [CASE_STUDY.md](CASE_STUDY.md).
+
+- Downloaded release 202507 by its pinned URL; SHA-256 matched the published Git LFS pointer.
+- `tools/ords_sample.py` reproduced the earlier 15,033-record sample byte for byte. The sample's SHA-256 is recorded in the case study.
+- Audit results matched the milestone check: 4,698 `required` errors (all `problem`), 0 code-list errors; 2,781 vs 0 duplicates for naive vs provider + ID keys on partner-level IDs.
+- `tools/ords_provider_summary.py` streamed the whole 58 MB file in about 2 seconds.
+- 6 new tests in `test_tools.py` (sampling order, prefix removal, overwrite refusal, per-provider counts, no cell values in output, rejection of non-ORDS files): **62 tests pass**.
+- The README demo GIF was recorded from the real local dashboard with Playwright.
+
+Not verified: the commands on Windows (written for PowerShell, not yet run there), and why two providers publish no problem text.
+
 ## Windows connection-reset fix: 16 October 2026
 
 Checked locally on Windows, Python 3.13 (64-bit).

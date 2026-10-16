@@ -1,14 +1,16 @@
 # CSV Triage
 
-**Understand a CSV's problems before importing or analysing it.**
+**Find inconsistent repair records before you analyse them.**
 
-A local data-quality workbench with a Python validation engine, command-line interface, JSON API, browser dashboard and optional SQLite report history. It checks explicit rules and produces reproducible evidence without editing the source data or sending it to external services.
+CSV Triage checks a CSV export against rules you write down and reports which records break them. It never edits the data and never sends it anywhere: it runs on your own computer. Its main profile covers repair records in the [Open Repair Data Standard](https://standard.openrepair.org/standard.html) (ORDS) v0.3; it also works as a general CSV checker.
 
-It includes a documented **repair-data profile** for partner records in the [Open Repair Data Standard](https://standard.openrepair.org/standard.html) v0.3: provider-scoped IDs, code lists, date rules, errors versus warnings and completeness per field and provider. See [ORDS.md](ORDS.md) for exactly what it does and does not check.
+![Loading the repair example, running the audit, filtering warnings and comparing a corrected file](demo.gif)
 
-Status: **working prototype**. The demos are synthetic. No user adoption, official endorsement, ORDS conformance certification or production readiness is claimed.
+**On real data** ([case study](CASE_STUDY.md)): in Open Repair release 202507 (305,649 records, data up to July 2025), it showed that two of the eight data providers publish no fault descriptions at all, and that checking record IDs on their own would report 2,781 false duplicates in a 15,033-record sample.
 
-![Repair-data audit: 8 errors, 4 warnings, completeness by field and provider](demo-screenshot.png)
+**What it checks for repair data:** provider-scoped record IDs, ORDS code lists, dates and formats, errors versus warnings, and completeness per field and per provider. [ORDS.md](ORDS.md) lists exactly what is and is not checked.
+
+Status: **working prototype**. Python 3.11+, no third-party dependencies, 62 tests, run by CI on Windows and Linux. The demos are synthetic. No user adoption, official endorsement, ORDS conformance certification or production readiness is claimed.
 
 ## Try it
 
@@ -25,6 +27,8 @@ Open <http://127.0.0.1:8765>. Choose an example and select **Load example**, the
 - **Sensor readings (generic CSV)**: the original seven-record demo with eight findings.
 
 Filter by rule or severity, compare field completeness by provider and export the JSON report. **Use ORDS v0.3 rules** applies the profile to your own CSV without changing it.
+
+![Full results page: 8 errors, 4 warnings, completeness by field and provider](demo-screenshot.png)
 
 ```sh
 python audit.py fixtures/repair-seeded.csv --schema profiles/ords-v0.3.json --output seeded.json
@@ -87,6 +91,15 @@ See [demo-schema.json](demo-schema.json) and the larger [ORDS profile](profiles/
 
 `missing` decides what happens when a key component is blank: `report` (default) adds a `key_incomplete` error, while `skip` leaves the record out of the key check and counts it. `pattern` is a Python regular expression (max 200 characters) from your own rules file. Avoid catastrophic backtracking patterns, because the tool is local and does not time out a regex. The schema is a deliberately small custom format, not a Frictionless Table Schema implementation. The demo's unique station ID rule is illustrative: a real time-series dataset normally needs a composite station/date key. Always adapt rules to source documentation.
 
+## Real-data tools
+
+The full Open Repair release is too large for the 5 MB audit limit, so two small scripts in `tools/` help:
+
+- `tools/ords_sample.py` makes a reproducible sample (the first N records per provider), optionally with partner-level IDs.
+- `tools/ords_provider_summary.py` streams the whole release and prints per-provider gaps as a table, counts only.
+
+[CASE_STUDY.md](CASE_STUDY.md) has the exact commands and results. The data is CC BY-SA 4.0 and stays out of this repository.
+
 ## Architecture
 
 ```text
@@ -120,6 +133,6 @@ This is a local development server: no authentication, TLS or deployment hardeni
 
 ## Contributing
 
-Run `python -m unittest -v` before changes (56 tests). Include a failing fixture and a regression test for a validation bug. Discuss source licences before adding real datasets: Open Repair data is CC BY-SA 4.0, separate from this repository's MIT code licence, and no real records are committed. Keep demo records synthetic, and never commit private data, reports, databases, tokens or `.env` files.
+Run `python -m unittest -v` before changes (62 tests). Include a failing fixture and a regression test for a validation bug. Discuss source licences before adding real datasets: Open Repair data is CC BY-SA 4.0, separate from this repository's MIT code licence, and no real records are committed. Keep demo records synthetic, and never commit private data, reports, databases, tokens or `.env` files.
 
 Code licensed under MIT. ORDS code-list values are reproduced from Open Repair Data (Open Repair Alliance, CC BY-SA 4.0).
